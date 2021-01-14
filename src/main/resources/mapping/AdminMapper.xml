@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exam.mapper.AdminMapper">
+  <resultMap id="BaseResultMap" type="com.exam.entity.Admin">
+    <id column="adminId" jdbcType="INTEGER" property="adminId" />
+    <result column="adminName" jdbcType="VARCHAR" property="adminName" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="cardId" jdbcType="VARCHAR" property="cardId" />
+    <result column="role" jdbcType="VARCHAR" property="role" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    adminId, adminName, sex, tel, email, pwd, cardId, role
+  </sql>
+
+  <!--查询所有admin用户-->
+  <select id="findAll">
+    select
+    <include refid="Base_Column_List" />
+    from admin
+  </select>
+  <!--根据id查询admin用户-->
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from admin
+    where adminId = #{adminId,jdbcType=INTEGER}
+  </select>
+  <!--根据id删除admin用户-->
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from admin
+    where adminId = #{adminId,jdbcType=INTEGER}
+  </delete>
+  <!--更新admin用户信息-->
+  <update id="update" parameterType="com.exam.entity.Admin">
+    update admin
+    set adminName = #{adminName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      cardId = #{cardId,jdbcType=VARCHAR},
+      role = #{role,jdbcType=VARCHAR}
+    where adminId = #{adminId,jdbcType=INTEGER}
+  </update>
+  <!--添加admin用户信息-->
+  <insert id="add" parameterType="com.exam.entity.Admin">
+    insert into admin (adminId, adminName, sex,
+      tel, email, pwd, cardId,
+      role)
+    values (#{adminId,jdbcType=INTEGER}, #{adminName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
+      #{tel,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{cardId,jdbcType=VARCHAR},
+      #{role,jdbcType=VARCHAR})
+  </insert>
+
+
+
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where adminId = #{adminid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from admin
+    where adminId = #{adminid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.exam.entity.Admin">
+    insert into admin (adminId, adminName, sex, 
+      tel, email, pwd, cardId, 
+      role)
+    values (#{adminid,jdbcType=INTEGER}, #{adminname,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{cardid,jdbcType=VARCHAR}, 
+      #{role,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.exam.entity.Admin">
+    insert into admin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adminid != null">
+        adminId,
+      </if>
+      <if test="adminname != null">
+        adminName,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="pwd != null">
+        pwd,
+      </if>
+      <if test="cardid != null">
+        cardId,
+      </if>
+      <if test="role != null">
+        role,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adminid != null">
+        #{adminid,jdbcType=INTEGER},
+      </if>
+      <if test="adminname != null">
+        #{adminname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="cardid != null">
+        #{cardid,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.exam.entity.Admin">
+    update admin
+    <set>
+      <if test="adminname != null">
+        adminName = #{adminname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="cardid != null">
+        cardId = #{cardid,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        role = #{role,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where adminId = #{adminid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.exam.entity.Admin">
+    update admin
+    set adminName = #{adminname,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      cardId = #{cardid,jdbcType=VARCHAR},
+      role = #{role,jdbcType=VARCHAR}
+    where adminId = #{adminid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exam.mapper.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.exam.entity.Student">
+    <id column="studentId" jdbcType="INTEGER" property="studentId" />
+    <result column="studentName" jdbcType="VARCHAR" property="studentName" />
+    <result column="grade" jdbcType="VARCHAR" property="grade" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="clazz" jdbcType="VARCHAR" property="clazz" />
+    <result column="institute" jdbcType="VARCHAR" property="institute" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="cardId" jdbcType="VARCHAR" property="cardId" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="role" jdbcType="VARCHAR" property="role" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    studentId, studentName, grade, major, clazz, institute, tel, email, pwd, cardId,
+    sex, role
+  </sql>
+  <!--分页查询所有学生-->
+  <select id="findAll" parameterType="com.exam.entity.Student" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from student
+  </select>
+  <!--根据id查询学生信息-->
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from student
+    where studentId = #{studentid,jdbcType=INTEGER}
+  </select>
+  <!--根据id删除学生信息-->
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from student
+    where studentId = #{studentid,jdbcType=INTEGER}
+  </delete>
+  <!--更新学生信息-->
+  <update id="update" parameterType="com.exam.entity.Student">
+    update student
+    set studentName = #{studentName,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      clazz = #{clazz,jdbcType=VARCHAR},
+      institute = #{institute,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      cardId = #{cardId,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      role = #{role,jdbcType=VARCHAR}
+    where studentId = #{studentId,jdbcType=INTEGER}
+  </update>
+  <!--更新密码-->
+  <update id="updatePwd" parameterType="com.exam.entity.Student">
+    update student set pwd = #{pwd} where studentId = #{studentId}
+  </update>
+  <!--添加一条学生信息-->
+  <insert id="add" parameterType="com.exam.entity.Student">
+    insert into student (studentName, grade,
+      major, clazz, institute,
+      tel, email, pwd, cardId,
+      sex, role)
+    values ( #{studentName,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR},
+      #{major,jdbcType=VARCHAR}, #{clazz,jdbcType=VARCHAR}, #{institute,jdbcType=VARCHAR},
+      #{tel,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{cardId,jdbcType=VARCHAR},
+      #{sex,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR})
+  </insert>
+
+
+
+
+
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where studentId = #{studentid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from student
+    where studentId = #{studentid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.exam.entity.Student">
+    insert into student (studentId, studentName, grade, 
+      major, clazz, institute, 
+      tel, email, pwd, cardId, 
+      sex, role)
+    values (#{studentid,jdbcType=INTEGER}, #{studentname,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, 
+      #{major,jdbcType=VARCHAR}, #{clazz,jdbcType=VARCHAR}, #{institute,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{cardid,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.exam.entity.Student">
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentid != null">
+        studentId,
+      </if>
+      <if test="studentname != null">
+        studentName,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="major != null">
+        major,
+      </if>
+      <if test="clazz != null">
+        clazz,
+      </if>
+      <if test="institute != null">
+        institute,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="pwd != null">
+        pwd,
+      </if>
+      <if test="cardid != null">
+        cardId,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="role != null">
+        role,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studentid != null">
+        #{studentid,jdbcType=INTEGER},
+      </if>
+      <if test="studentname != null">
+        #{studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="clazz != null">
+        #{clazz,jdbcType=VARCHAR},
+      </if>
+      <if test="institute != null">
+        #{institute,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="cardid != null">
+        #{cardid,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.exam.entity.Student">
+    update student
+    <set>
+      <if test="studentname != null">
+        studentName = #{studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="clazz != null">
+        clazz = #{clazz,jdbcType=VARCHAR},
+      </if>
+      <if test="institute != null">
+        institute = #{institute,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="cardid != null">
+        cardId = #{cardid,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        role = #{role,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where studentId = #{studentid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.exam.entity.Student">
+    update student
+    set studentName = #{studentname,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      clazz = #{clazz,jdbcType=VARCHAR},
+      institute = #{institute,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      cardId = #{cardid,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      role = #{role,jdbcType=VARCHAR}
+    where studentId = #{studentid,jdbcType=INTEGER}
+  </update>
+</mapper>

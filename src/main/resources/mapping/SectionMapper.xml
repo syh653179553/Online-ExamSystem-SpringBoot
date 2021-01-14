@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exam.mapper.SectionMapper">
+    <resultMap id="BaseResultMap" type="com.exam.entity.Section">
+        <result column="sectionId" jdbcType="INTEGER" property="sectionId"/>
+        <result column="sectionName" jdbcType="VARCHAR" property="sectionName"/>
+        <result column="subjectid" jdbcType="INTEGER" property="subjectid"/>
+    </resultMap>
+    <select id="findBySubjectId" parameterType="com.exam.entity.Section" resultMap="BaseResultMap">
+        select sectionId,sectionName,subjectid
+        from section
+        where subjectid = #{subjectid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Integer" >
+        delete  from section
+        where sectionId = #{sectionId,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteBySubjectId" parameterType="java.lang.Integer">
+        delete from section
+        where subjectid = #{subjectid,jdbcType=INTEGER}
+    </delete>
+    <insert id="add" parameterType="com.exam.entity.Section">
+        insert into section(sectionName,subjectid)
+        value (#{sectionName,jdbcType=VARCHAR},#{subjectid,jdbcType=INTEGER})
+    </insert>
+</mapper>

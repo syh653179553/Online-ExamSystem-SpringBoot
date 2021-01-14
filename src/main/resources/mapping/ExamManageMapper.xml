@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exam.mapper.ExamManageMapper">
+  <resultMap id="BaseResultMap" type="com.exam.entity.ExamManage">
+    <id column="examCode" jdbcType="INTEGER" property="examCode" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="paperId" jdbcType="INTEGER" property="paperId" />
+    <result column="examDate" jdbcType="TIMESTAMP" property="examDate" />
+    <result column="totalTime" jdbcType="INTEGER" property="totalTime" />
+    <result column="grade" jdbcType="VARCHAR" property="grade" />
+    <result column="term" jdbcType="VARCHAR" property="term" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="institute" jdbcType="VARCHAR" property="institute" />
+    <result column="totalScore" jdbcType="INTEGER" property="totalScore" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="tips" jdbcType="VARCHAR" property="tips" />
+    <result column="initiator" jdbcType="VARCHAR" property="initiator" />
+    <result column="launch_date" jdbcType="TIMESTAMP" property="launchDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    examCode, description, source, paperId, examDate, totalTime, grade, term, major, 
+    institute, totalScore, type, tips, initiator, launch_date
+  </sql>
+  <!--查询所有考试信息-->
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from exam_manage
+    order by launch_date desc
+  </select>
+
+  <!--按考试类别查询所有考试信息-->
+  <select id="findByType" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from exam_manage
+    where type = #{type,jdbcType=VARCHAR}
+  </select>
+
+
+  <!--分页查询所有考试信息-->
+  <select id="findAllPage" parameterType="com.exam.entity.ExamManage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from exam_manage
+    order by launch_date desc
+  </select>
+  <!--根据id查询考试信息-->
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from exam_manage
+    where examCode = #{examCode,jdbcType=INTEGER}
+  </select>
+  <!--根据id删除考试信息-->
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from exam_manage
+    where examCode = #{examCode,jdbcType=INTEGER}
+  </delete>
+  <!--更新考试信息-->
+  <update id="update" parameterType="com.exam.entity.ExamManage">
+    update exam_manage
+    set description = #{description,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      paperId = #{paperId,jdbcType=INTEGER},
+      examDate = #{examDate,jdbcType=TIMESTAMP},
+      totalTime = #{totalTime,jdbcType=INTEGER},
+      grade = #{grade,jdbcType=VARCHAR},
+      term = #{term,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      institute = #{institute,jdbcType=VARCHAR},
+      totalScore = #{totalScore,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      tips = #{tips,jdbcType=VARCHAR},
+      initiator = #{initiator,jdbcType=VARCHAR},
+      launch_date = #{launchDate,jdbcType=TIMESTAMP}
+    where examCode = #{examCode,jdbcType=INTEGER}
+  </update>
+  <!--添加考试信息-->
+  <insert id="add" parameterType="com.exam.entity.ExamManage">
+    insert into exam_manage (examCode, description, source,
+      paperId, examDate, totalTime,
+      grade, term, major,
+      institute, totalScore, type,
+      tips, initiator, launch_date
+      )
+    values (#{examCode,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR},
+      #{paperId,jdbcType=INTEGER}, #{examDate,jdbcType=TIMESTAMP}, #{totalTime,jdbcType=INTEGER},
+      #{grade,jdbcType=VARCHAR}, #{term,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR},
+      #{institute,jdbcType=VARCHAR}, #{totalScore,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR},
+      #{tips,jdbcType=VARCHAR}, #{initiator,jdbcType=VARCHAR}, #{launchDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <!--查询最后一条记录的paperId,返回给前端达到自增效果-->
+  <select id="findOnlyPaperId" resultMap="BaseResultMap">
+    select paperId from exam_manage order by paperId desc limit 1
+  </select>
+
+
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from exam_manage
+    where examCode = #{examcode,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from exam_manage
+    where examCode = #{examcode,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.exam.entity.ExamManage">
+    insert into exam_manage (examCode, description, source, 
+      paperId, examDate, totalTime, 
+      grade, term, major, 
+      institute, totalScore, type, 
+      tips, initiator, launch_date
+      )
+    values (#{examcode,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, 
+      #{paperid,jdbcType=INTEGER}, #{examdate,jdbcType=TIMESTAMP}, #{totaltime,jdbcType=INTEGER}, 
+      #{grade,jdbcType=VARCHAR}, #{term,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, 
+      #{institute,jdbcType=VARCHAR}, #{totalscore,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
+      #{tips,jdbcType=VARCHAR}, #{initiator,jdbcType=VARCHAR}, #{launchDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.exam.entity.ExamManage">
+    insert into exam_manage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="examcode != null">
+        examCode,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="source != null">
+        source,
+      </if>
+      <if test="paperid != null">
+        paperId,
+      </if>
+      <if test="examdate != null">
+        examDate,
+      </if>
+      <if test="totaltime != null">
+        totalTime,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="term != null">
+        term,
+      </if>
+      <if test="major != null">
+        major,
+      </if>
+      <if test="institute != null">
+        institute,
+      </if>
+      <if test="totalscore != null">
+        totalScore,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="tips != null">
+        tips,
+      </if>
+      <if test="initiator != null">
+        initiator,
+      </if>
+      <if test="launchDate != null">
+        launch_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="examcode != null">
+        #{examcode,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="paperid != null">
+        #{paperid,jdbcType=INTEGER},
+      </if>
+      <if test="examdate != null">
+        #{examdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totaltime != null">
+        #{totaltime,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="term != null">
+        #{term,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="institute != null">
+        #{institute,jdbcType=VARCHAR},
+      </if>
+      <if test="totalscore != null">
+        #{totalscore,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="tips != null">
+        #{tips,jdbcType=VARCHAR},
+      </if>
+      <if test="initiator != null">
+        #{initiator,jdbcType=VARCHAR},
+      </if>
+      <if test="launchDate != null">
+        #{launchDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.exam.entity.ExamManage">
+    update exam_manage
+    <set>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="paperid != null">
+        paperId = #{paperid,jdbcType=INTEGER},
+      </if>
+      <if test="examdate != null">
+        examDate = #{examdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totaltime != null">
+        totalTime = #{totaltime,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="term != null">
+        term = #{term,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="institute != null">
+        institute = #{institute,jdbcType=VARCHAR},
+      </if>
+      <if test="totalscore != null">
+        totalScore = #{totalscore,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="tips != null">
+        tips = #{tips,jdbcType=VARCHAR},
+      </if>
+      <if test="initiator != null">
+        initiator = #{initiator,jdbcType=VARCHAR},
+      </if>
+      <if test="launchDate != null">
+        launch_date = #{launchDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where examCode = #{examcode,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.exam.entity.ExamManage">
+    update exam_manage
+    set description = #{description,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      paperId = #{paperid,jdbcType=INTEGER},
+      examDate = #{examdate,jdbcType=TIMESTAMP},
+      totalTime = #{totaltime,jdbcType=INTEGER},
+      grade = #{grade,jdbcType=VARCHAR},
+      term = #{term,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      institute = #{institute,jdbcType=VARCHAR},
+      totalScore = #{totalscore,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      tips = #{tips,jdbcType=VARCHAR},
+      initiator = #{initiator,jdbcType=VARCHAR},
+      launch_date = #{launchDate,jdbcType=TIMESTAMP}
+    where examCode = #{examcode,jdbcType=INTEGER}
+  </update>
+</mapper>
